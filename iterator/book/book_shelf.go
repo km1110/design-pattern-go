@@ -1,26 +1,26 @@
 package book
 
 type IBookShelf interface {
-	GetBookAt(i int) Book
-	AppendBook(b Book)
+	GetBookAt(i int) *Book
+	AppendBook(b *Book)
 	GetLength() int
 }
 
 type bookShelf struct {
-	books []Book
+	books []*Book
 	last  int
 }
 
 func NewBookShelf(l int) IBookShelf {
-	return &bookShelf{books: make([]Book, 0, l), last: 0}
+	return &bookShelf{books: make([]*Book, l), last: 0}
 }
 
-func (bs *bookShelf) GetBookAt(i int) Book {
+func (bs *bookShelf) GetBookAt(i int) *Book {
 	return bs.books[i]
 }
 
-func (bs *bookShelf) AppendBook(b Book) {
-	bs.books = append(bs.books, b)
+func (bs *bookShelf) AppendBook(b *Book) {
+	bs.books[bs.last] = b
 	bs.last++
 }
 

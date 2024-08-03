@@ -1,10 +1,12 @@
 package book
 
-import "fmt"
+import (
+	"errors"
+)
 
 type IBookShelfIterator interface {
 	HasNext() bool
-	Next() Book
+	Next() (*Book, error)
 }
 
 type bookShelfIterator struct {
@@ -17,19 +19,15 @@ func NewBookShelfIterator(bs IBookShelf) IBookShelfIterator {
 }
 
 func (bsi *bookShelfIterator) HasNext() bool {
-	if bsi.index < bsi.bs.GetLength() {
-		return true
-	} else {
-		return false
-	}
+	return bsi.index < bsi.bs.GetLength()
 }
 
-func (bsi *bookShelfIterator) Next() Book {
+func (bsi *bookShelfIterator) Next() (*Book, error) {
 	if !bsi.HasNext() {
-		fmt.Println("Error")
+		return nil, errors.New("no such elemet")
 	}
 
 	book := bsi.bs.GetBookAt(bsi.index)
 	bsi.index++
-	return book
+	return book, nil
 }
