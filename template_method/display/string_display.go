@@ -8,8 +8,7 @@ type stringDisplay struct {
 }
 
 func NewStringDisplay(s string) IDisplay {
-	w := len(s)
-	return &stringDisplay{s: s, w: w}
+	return &stringDisplay{s: s, w: len(s)}
 }
 
 func (sd stringDisplay) Open() {

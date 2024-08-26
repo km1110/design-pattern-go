@@ -1,9 +1,23 @@
 package display
 
-func NewDisplay(d IDisplay) {
-	d.Open()
+type IDisplay interface {
+	Open()
+	Print()
+	Close()
+}
+
+type AbstractDisplay struct {
+	IDisplay
+}
+
+func NewAbstractDisplay(d IDisplay) *AbstractDisplay {
+	return &AbstractDisplay{d}
+}
+
+func (ad *AbstractDisplay) Display() {
+	ad.Open()
 	for i := 0; i < 5; i++ {
-		d.Print()
+		ad.Print()
 	}
-	d.Close()
+	ad.Close()
 }
